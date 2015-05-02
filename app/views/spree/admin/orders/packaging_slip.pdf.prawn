@@ -5,9 +5,9 @@ define_grid(columns: 5, rows: 8, gutter: 10)
 
 # HEADER
 repeat(:all) do
-  im = Rails.application.assets.find_asset(Spree::PrintInvoice::Config[:logo_path])
-  if im && File.exist?(im.pathname)
-    image im, vposition: :top, height: 40, scale: Spree::PrintInvoice::Config[:logo_scale]
+  if Spree::PrintInvoice::Config[:logo_path]
+  	image "#{Rails.root}/" + Spree::PrintInvoice::Config[:logo_path], vposition: :top,
+  	    height: 20, scale: Spree::PrintInvoice::Config[:logo_scale]
   end
 
   grid([0,3], [0,4]).bounding_box do
@@ -91,12 +91,16 @@ grid([1,0], [6,4]).bounding_box do
   end
 
   move_down 30
-  text Spree::PrintInvoice::Config[:anomaly_message], align: :left, size: @font_size
+  text Spree::PrintInvoice::Config[:return_message], align: :left, size: @font_size
 
   move_down 20
-  bounding_box([0, cursor], width: 540, height: 250) do
+  bounding_box([0, cursor], width: 540, height: 150) do
     transparent(0.5) { stroke_bounds }
   end
+  
+  move_down 30
+  text Spree::PrintInvoice::Config[:anomaly_message], align: :center, size: @font_size * 1.5
+  
 end
 
 # FOOTER
@@ -105,7 +109,7 @@ if Spree::PrintInvoice::Config[:use_footer]
     grid([7,0], [7,4]).bounding_box do
 
       data  = []
-      data << [make_cell(content: Spree.t(:vat, scope: :print_invoice) , colspan: 2, align: :center)]
+      # data << [make_cell(content: Spree.t(:vat, scope: :print_invoice) , colspan: 2, align: :center)]
       data << [make_cell(content: '', colspan: 2)]
       data << [make_cell(content: Spree::PrintInvoice::Config[:footer_left], align: :left),
       make_cell(content: Spree::PrintInvoice::Config[:footer_right], align: :right)]
