@@ -106,10 +106,12 @@ grid([1,0], [6,4]).bounding_box do
   # Payments
   total_payments = 0.0
   @order.payments.each do |payment|
+    next if payment.display_amount.cents < 1
     totals << [
       make_cell(
         content: Spree.t(:payment_via,
-        gateway: (payment.source_type || Spree.t(:unprocessed, scope: :print_invoice)),
+        gateway: (),
+# (payment.source_type || Spree.t(:unprocessed, scope: :print_invoice)),
         number: payment.number,
         date: I18n.l(payment.updated_at.to_date, format: :long),
         scope: :print_invoice)
@@ -134,7 +136,7 @@ if Spree::PrintInvoice::Config[:use_footer]
     grid([7,0], [7,4]).bounding_box do
 
       data  = []
-      data << [make_cell(content: Spree.t(:vat, scope: :print_invoice), colspan: 2, align: :center)]
+      # data << [make_cell(content: Spree.t(:vat, scope: :print_invoice), colspan: 2, align: :center)]
       data << [make_cell(content: '', colspan: 2)]
       data << [make_cell(content: Spree::PrintInvoice::Config[:footer_left],  align: :left),
       make_cell(content: Spree::PrintInvoice::Config[:footer_right], align: :right)]

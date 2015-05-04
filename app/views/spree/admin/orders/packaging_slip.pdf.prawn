@@ -99,8 +99,7 @@ grid([1,0], [6,4]).bounding_box do
   end
   
   move_down 30
-  text Spree::PrintInvoice::Config[:anomaly_message], align: :center, size: @font_size * 1.5
-  
+  text Spree::PrintInvoice::Config[:anomaly_message], align: :center, size: @font_size  
 end
 
 # FOOTER
