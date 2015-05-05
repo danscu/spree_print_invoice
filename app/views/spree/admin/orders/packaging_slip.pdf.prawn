@@ -91,12 +91,12 @@ grid([1,0], [6,4]).bounding_box do
   end
 
   move_down 30
-  text Spree::PrintInvoice::Config[:anomaly_message], align: :left, size: @font_size
+  text Spree::PrintInvoice::Config[:return_message], align: :left, size: @font_size
 
-  move_down 20
-  bounding_box([0, cursor], width: 540, height: 150) do
-    transparent(0.5) { stroke_bounds }
-  end
+#  move_down 20
+#  bounding_box([0, cursor], width: 540, height: 150) do
+#    transparent(0.5) { stroke_bounds }
+#  end
 end
 
 # FOOTER
